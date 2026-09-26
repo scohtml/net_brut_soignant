@@ -83,8 +83,8 @@ details[open] summary{margin-bottom:12px}
 
   <div class="panel grid">
     <label class="full" for="brut">Brut de base mensuel (€)
-      <input id="brut" inputmode="decimal" value="2178,94">
-      <span class="hint" id="brutHint">coef 477 × 4,568 = 2 178,94</span>
+      <input id="brut" inputmode="decimal" value="2700">
+      <span class="hint" id="brutHint">coef 477 × 4,568 = 2 700</span>
     </label>
     <label for="anc">Ancienneté (ans)
       <input id="anc" inputmode="decimal" value="" placeholder="0">
@@ -186,7 +186,7 @@ function setCC(v, keepParams){
   $("cc2264").setAttribute("aria-pressed", v==="2264");
   document.documentElement.classList.toggle("lucratif", v==="2264");
   $("fx").textContent = CC[v].label;
-  $("brutHint").textContent = v==="51" ? "coef 477 × 4,568 = 2 178,94" : "salaire de base du contrat, hors Ségur";
+  $("brutHint").textContent = v==="51" ? "coef 477 × 4,568 = 2 700" : "salaire de base du contrat, hors Ségur";
   $("note").textContent = CC[v].note;
   if(!keepParams) setParams();
   calc();
