@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Brut → net IDE</title>
+<title>Brut → net soignant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
@@ -13,21 +13,21 @@
   --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --sans:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
 }
-:root.lucratif{ --accent:#9A5F12; --accent-soft:#F6ECD9; }
+:root.lucratif{ --accent:#C94F7A; --accent-soft:#F5E1E7; }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
     --ground:#101819; --surface:#182324; --ink:#E4ECEC; --muted:#93A4A6; --line:#2A3839;
     --accent:#4FB3AE; --accent-soft:#1C3534; --field:#1F2C2D;
   }
-  :root.lucratif:not([data-theme="light"]){ --accent:#E0A659; --accent-soft:#3A2D1A; }
+  :root.lucratif:not([data-theme="light"]){ --accent:#E68FAA; --accent-soft:#3A1C25; }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
   --ground:#101819; --surface:#182324; --ink:#E4ECEC; --muted:#93A4A6; --line:#2A3839;
   --accent:#4FB3AE; --accent-soft:#1C3534; --field:#1F2C2D;
 }
-:root[data-theme="dark"].lucratif{ --accent:#E0A659; --accent-soft:#3A2D1A; }
+:root[data-theme="dark"].lucratif{ --accent:#E087A5; --accent-soft:#3A1D28; }
 
 *{box-sizing:border-box}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
@@ -64,17 +64,31 @@ details[open] summary{margin-bottom:12px}
 .note{font-size:11.5px;line-height:1.5;color:var(--muted);margin:0}
 .reset{font:500 12px var(--sans);background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:6px 10px;cursor:pointer;margin-top:12px}
 @media (max-width:360px){.net .v{font-size:22px}}
+.checks{display:flex;flex-wrap:wrap;gap:8px 14px}
+.check{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--sans);letter-spacing:.04em;color:var(--muted);cursor:pointer;min-width:0}
+.check input[type="checkbox"]{width:14px;height:14px;margin:0;flex-shrink:0;accent-color:var(--accent)}
+.check span.lbl{white-space:nowrap}
+.check .amt{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;font:500 12px var(--mono);color:var(--muted)}
+.check .amt input{width:54px;padding:3px 5px;font-size:12px;text-align:right}
+.check.disabled{opacity:.35;pointer-events:none}
+.alert{background:#F7E4C7;color:#7A4A0F;border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.4}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .alert{background:#3A2D1A;color:#E0A659}}
+:root[data-theme="dark"] .alert{background:#3A2D1A;color:#E0A659}
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <div class="head">
-    <h1 class="title">Brut → net IDE</h1>
+    <h1 class="title">Brut → net soignant</h1>
     <span class="formula" id="fx">CCN 51</span>
   </div>
 
   <div class="panel">
+    <div class="seg" role="group" aria-label="Métier" style="margin-bottom:8px">
+      <button type="button" id="mIDE" aria-pressed="true">IDE<small>coef 477 / 5A </small></button>
+      <button type="button" id="mAS" aria-pressed="false">Aide-soignant<small>coef 376 / 4A</small></button>
+    </div>
     <div class="seg" role="group" aria-label="Convention collective">
       <button type="button" id="cc51" aria-pressed="true">CCN 51<small>FEHAP · non lucratif</small></button>
       <button type="button" id="cc2264" aria-pressed="false">Privé lucratif<small>CCN 2264 · FHP/Synerpa</small></button>
@@ -83,8 +97,8 @@ details[open] summary{margin-bottom:12px}
 
   <div class="panel grid">
     <label class="full" for="brut">Brut de base mensuel (€)
-      <input id="brut" inputmode="decimal" value="2700">
-      <span class="hint" id="brutHint">coef 477 × 4,568 = 2 700</span>
+      <input id="brut" inputmode="decimal" value="2178,94">
+      <span class="hint" id="brutHint">coef 477 × 4,568 = 2 178,94</span>
     </label>
     <label for="anc">Ancienneté (ans)
       <input id="anc" inputmode="decimal" value="" placeholder="0">
@@ -97,6 +111,16 @@ details[open] summary{margin-bottom:12px}
       <input id="hDim" inputmode="decimal" value="10">
     </label>
   </div>
+
+  <div class="panel">
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="pPD"><span class="lbl">Prime décentralisée · 5 %</span></label>
+      <label class="check" id="pASGlbl"><input type="checkbox" id="pASG"><span class="lbl">Prime ASG</span><span class="amt"><input id="pASGv" inputmode="decimal" value="90">€</span></label>
+      <label class="check"><input type="checkbox" id="pGA"><span class="lbl">Prime grand âge</span><span class="amt"><input id="pGAv" inputmode="decimal" value="118">€</span></label>
+    </div>
+  </div>
+
+  <div id="smicWarn" class="panel alert" hidden>Le brut total est inférieur au SMIC temps plein (≈ 1 802 € brut). L'employeur doit compléter jusqu'à ce plancher.</div>
 
   <div class="nets">
     <div class="net main">
@@ -118,6 +142,9 @@ details[open] summary{margin-bottom:12px}
         <tr><td>Prime d'ancienneté<span class="d" id="rAncD"></span></td><td id="rAnc">—</td></tr>
         <tr><td>Complément Ségur<span class="d" id="rSegD"></span></td><td id="rSeg">—</td></tr>
         <tr><td>Indemnité dimanches<span class="d" id="rDimD"></span></td><td id="rDim">—</td></tr>
+        <tr id="rowPD" hidden><td>Prime décentralisée<span class="d">5 % du brut de base</span></td><td id="rPD">—</td></tr>
+        <tr id="rowASG" hidden><td>Prime ASG</td><td id="rASG">—</td></tr>
+        <tr id="rowGA" hidden><td>Prime grand âge</td><td id="rGA">—</td></tr>
         <tr class="tot"><td>Brut total</td><td id="rTot">—</td></tr>
       </tbody>
     </table>
@@ -164,16 +191,26 @@ const $ = id => document.getElementById(id);
 const num = v => { const n = parseFloat(String(v).replace(/\s/g,"").replace(",", ".")); return isNaN(n) ? 0 : n; };
 const eur = n => n.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
 const f2 = n => n.toLocaleString("fr-FR",{maximumFractionDigits:2});
-let cc = "51";
+const METIER = {
+  IDE:{ base51:2178.94, hint51:"coef 477 × 4,568 = 2 178,94", hint2264:"salaire de base du contrat, hors Ségur" },
+  AS: { base51:1717.57, hint51:"coef 376 × 4,568 = 1 717,57", hint2264:"salaire de base du contrat, hors Ségur" }
+};
+const SMIC = 1801.80;
+let cc = "51", metier = "IDE";
 
 function load(){
   try{ const s = JSON.parse(localStorage.getItem("brutnet-ide")||"null");
-    if(s){ cc = s.cc||"51"; ["brut","anc","nbDim","hDim"].forEach(k=>{ if(s[k]!=null) $(k).value=s[k]; }); return s; } }catch(e){}
+    if(s){ cc = s.cc||"51"; metier = s.metier||"IDE";
+      ["brut","anc","nbDim","hDim","pASGv","pGAv"].forEach(k=>{ if(s[k]!=null) $(k).value=s[k]; });
+      ["pPD","pASG","pGA"].forEach(k=>{ if(s[k]!=null) $(k).checked=s[k]; });
+      return s; } }catch(e){}
   return null;
 }
 function save(){
-  try{ const s={cc}; ["brut","anc","nbDim","hDim","seg","dimH","ancRate","ancCap"].forEach(k=>s[k]=$(k).value);
-    s.params = s.params||{}; localStorage.setItem("brutnet-ide", JSON.stringify(s)); }catch(e){}
+  try{ const s={cc,metier};
+    ["brut","anc","nbDim","hDim","seg","dimH","ancRate","ancCap","pASGv","pGAv"].forEach(k=>s[k]=$(k).value);
+    ["pPD","pASG","pGA"].forEach(k=>s[k]=$(k).checked);
+    localStorage.setItem("brutnet-ide", JSON.stringify(s)); }catch(e){}
 }
 function setParams(){
   const p = CC[cc];
@@ -186,9 +223,21 @@ function setCC(v, keepParams){
   $("cc2264").setAttribute("aria-pressed", v==="2264");
   document.documentElement.classList.toggle("lucratif", v==="2264");
   $("fx").textContent = CC[v].label;
-  $("brutHint").textContent = v==="51" ? "coef 477 × 4,568 = 2 700" : "salaire de base du contrat, hors Ségur";
+  $("brutHint").textContent = v==="51" ? METIER[metier].hint51 : METIER[metier].hint2264;
   $("note").textContent = CC[v].note;
   if(!keepParams) setParams();
+  calc();
+}
+function setMetier(m, keepBrut){
+  metier = m;
+  $("mIDE").setAttribute("aria-pressed", m==="IDE");
+  $("mAS").setAttribute("aria-pressed", m==="AS");
+  if(!keepBrut && cc==="51") $("brut").value = f2(METIER[m].base51);
+  $("brutHint").textContent = cc==="51" ? METIER[m].hint51 : METIER[m].hint2264;
+  const ideMode = m==="IDE";
+  $("pASGlbl").classList.toggle("disabled", ideMode);
+  $("pASG").disabled = ideMode;
+  if(ideMode) $("pASG").checked = false;
   calc();
 }
 function calc(){
@@ -199,7 +248,15 @@ function calc(){
   const pct = Math.min(anc*rate, cap);
   const primeAnc = brut*pct/100;
   const dim = nb*h*dimH;
-  const tot = brut + primeAnc + seg + dim;
+  const pd = $("pPD").checked ? brut*0.05 : 0;
+  const asg = $("pASG").checked ? num($("pASGv").value) : 0;
+  const ga = $("pGA").checked ? num($("pGAv").value) : 0;
+  const tot = brut + primeAnc + seg + dim + pd + asg + ga;
+  $("rowPD").hidden = !$("pPD").checked;
+  $("rowASG").hidden = !$("pASG").checked;
+  $("rowGA").hidden = !$("pGA").checked;
+  $("rPD").textContent = eur(pd); $("rASG").textContent = eur(asg); $("rGA").textContent = eur(ga);
+  $("smicWarn").hidden = tot >= SMIC;
   $("rBase").textContent = eur(brut);
   $("rAnc").textContent = eur(primeAnc);
   $("rAncD").textContent = f2(pct) + " % du brut de base" + (anc*rate>cap ? " (plafond)" : "");
@@ -217,13 +274,17 @@ function calc(){
 }
 
 const saved = load();
+setMetier(metier, !!saved);
 setCC(cc, false);
 if(saved){ ["seg","dimH","ancRate","ancCap"].forEach(k=>{ if(saved[k]) $(k).value=saved[k]; }); calc(); }
 
 $("cc51").addEventListener("click", ()=>setCC("51"));
 $("cc2264").addEventListener("click", ()=>setCC("2264"));
+$("mIDE").addEventListener("click", ()=>setMetier("IDE"));
+$("mAS").addEventListener("click", ()=>setMetier("AS"));
 $("reset").addEventListener("click", ()=>{ setParams(); calc(); });
 document.querySelectorAll("input").forEach(i=>i.addEventListener("input", calc));
+document.querySelectorAll("input[type=checkbox]").forEach(i=>i.addEventListener("change", calc));
 </script>
 </body>
 </html>
